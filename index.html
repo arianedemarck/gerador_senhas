@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma de Estudos Protegido</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="tela-login" class="container-login">
+        <div class="cartao-login">
+            <h2>🔒 Acesso Restrito</h2>
+            <p>Digite a senha para acessar seu cronograma de estudos</p>
+            <input type="password" id="campo-senha" placeholder="Sua senha...">
+            <button id="btn-entrar">Entrar</button>
+            <p id="mensagem-erro" class="erro"></p>
+        </div>
+    </div>
+
+    <!-- Tela do Cronograma -->
+    <div id="tela-cronograma" class="container-cronograma escondido">
+        <header class="cabecalho">
+            <h1>📚 Meu Cronograma de Estudos</h1>
+            <button id="btn-sair">Sair 🚪</button>
+        </header>
+
+        <section class="conteudo">
+            <div class="grade-dias">
+                <!-- Segunda -->
+                <div class="card-dia">
+                    <h3>Segunda-feira</h3>
+                    <ul class="lista-tarefas">
+                        <li><input type="checkbox"> Matemática - Álgebra</li>
+                        <li><input type="checkbox"> Português - Gramática</li>
+                        <li><input type="checkbox"> Revisão de Exercícios</li>
+                    </ul>
+                </div>
+
+                <!-- Terça -->
+                <div class="card-dia">
+                    <h3>Terça-feira</h3>
+                    <ul class="lista-tarefas">
+                        <li><input type="checkbox"> História - Brasil Colônia</li>
+                        <li><input type="checkbox"> Geografia - Cartografia</li>
+                        <li><input type="checkbox"> Leitura do Livro do Mês</li>
+                    </ul>
+                </div>
+
+                <!-- Quarta -->
+                <div class="card-dia">
+                    <h3>Quarta-feira</h3>
+                    <ul class="lista-tarefas">
+                        <li><input type="checkbox"> Física - Mecânica</li>
+                        <li><input type="checkbox"> Química - Estequiometria</li>
+                        <li><input type="checkbox"> Lista de Exercícios</li>
+                    </ul>
+                </div>
+
+                <!-- Quinta -->
+                <div class="card-dia">
+                    <h3>Quinta-feira</h3>
+                    <ul class="lista-tarefas">
+                        <li><input type="checkbox"> Biologia - Citologia</li>
+                        <li><input type="checkbox"> Inglês - Vocabulário</li>
+                        <li><input type="checkbox"> Redação - Prática</li>
+                    </ul>
+                </div>
+
+                <!-- Sexta -->
+                <div class="card-dia">
+                    <h3>Sexta-feira</h3>
+                    <ul class="lista-tarefas">
+                        <li><input type="checkbox"> Filosofia / Sociologia</li>
+                        <li><input type="checkbox"> Simulado Rápido</li>
+                        <li><input type="checkbox"> Organização da Semana</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+    
