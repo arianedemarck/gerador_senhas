@@ -3,86 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronograma de Estudos Protegido</title>
+    <title>Cyber Password Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Tela de Login -->
-    <div id="tela-login" class="container-login">
-        <div class="cartao-login">
-            <h2>🔒 Acesso Restrito</h2>
-            <p>Digite a senha para acessar seu cronograma de estudos</p>
-            <input type="password" id="campo-senha" placeholder="Sua senha...">
-            <button id="btn-entrar">Entrar</button>
-            <p id="mensagem-erro" class="erro"></p>
-        </div>
-    </div>
+    <div class="container-jogo">
+        <div class="painel-arcade">
+            <h1 class="titulo-pixel">CYBER HACKER</h1>
+            <p class="subtitulo">Gere a senha perfeita para passar de fase!</p>
 
-    <!-- Tela do Cronograma -->
-    <div id="tela-cronograma" class="container-cronograma escondido">
-        <header class="cabecalho">
-            <h1>📚 Meu Cronograma de Estudos</h1>
-            <button id="btn-sair">Sair 🚪</button>
-        </header>
+            <!-- Tela Estilo Arcade -->
+            <div class="tela-display">
+                <div id="display-senha" class="texto-senha">PRESS START</div>
+            </div>
 
-        <section class="conteudo">
-            <div class="grade-dias">
-                <!-- Segunda -->
-                <div class="card-dia">
-                    <h3>Segunda-feira</h3>
-                    <ul class="lista-tarefas">
-                        <li><input type="checkbox"> Matemática - Álgebra</li>
-                        <li><input type="checkbox"> Português - Gramática</li>
-                        <li><input type="checkbox"> Revisão de Exercícios</li>
-                    </ul>
+            <!-- Controles do Jogo -->
+            <div class="controles">
+                <div class="painel-opcoes">
+                    <label class="btn-toggle">
+                        <input type="checkbox" id="chk-maiusculas" checked>
+                        <span class="slider"></span> ABC (MAIÚSCULAS)
+                    </label>
+                    <label class="btn-toggle">
+                        <input type="checkbox" id="chk-numeros" checked>
+                        <span class="slider"></span> 123 (NÚMEROS)
+                    </label>
+                    <label class="btn-toggle">
+                        <input type="checkbox" id="chk-simbolos">
+                        <span class="slider"></span> #$% (SÍMBOLOS)
+                    </label>
                 </div>
 
-                <!-- Terça -->
-                <div class="card-dia">
-                    <h3>Terça-feira</h3>
-                    <ul class="lista-tarefas">
-                        <li><input type="checkbox"> História - Brasil Colônia</li>
-                        <li><input type="checkbox"> Geografia - Cartografia</li>
-                        <li><input type="checkbox"> Leitura do Livro do Mês</li>
-                    </ul>
+                <div class="seletor-tamanho">
+                    <span>TAMANHO: <b id="valor-tamanho">8</b></span>
+                    <input type="range" id="range-tamanho" min="4" max="16" value="8">
                 </div>
 
-                <!-- Quarta -->
-                <div class="card-dia">
-                    <h3>Quarta-feira</h3>
-                    <ul class="lista-tarefas">
-                        <li><input type="checkbox"> Física - Mecânica</li>
-                        <li><input type="checkbox"> Química - Estequiometria</li>
-                        <li><input type="checkbox"> Lista de Exercícios</li>
-                    </ul>
-                </div>
-
-                <!-- Quinta -->
-                <div class="card-dia">
-                    <h3>Quinta-feira</h3>
-                    <ul class="lista-tarefas">
-                        <li><input type="checkbox"> Biologia - Citologia</li>
-                        <li><input type="checkbox"> Inglês - Vocabulário</li>
-                        <li><input type="checkbox"> Redação - Prática</li>
-                    </ul>
-                </div>
-
-                <!-- Sexta -->
-                <div class="card-dia">
-                    <h3>Sexta-feira</h3>
-                    <ul class="lista-tarefas">
-                        <li><input type="checkbox"> Filosofia / Sociologia</li>
-                        <li><input type="checkbox"> Simulado Rápido</li>
-                        <li><input type="checkbox"> Organização da Semana</li>
-                    </ul>
+                <div class="botoes-acao">
+                    <button id="btn-gerar" class="btn-arcade btn-verde">GERAR SENHA</button>
+                    <button id="btn-hackear" class="btn-arcade btn-vermelho">TESTAR SENHA</button>
                 </div>
             </div>
-        </section>
+
+            <!-- Tela de Game Over / Sucesso -->
+            <div id="overlay-status" class="overlay escondido">
+                <h2 id="texto-status">GAME OVER</h2>
+                <p id="mensagem-status">Senha muito fraca! O sistema detectou a invasão.</p>
+                <button id="btn-reiniciar" class="btn-arcade btn-amarelo">TRY AGAIN 🔁</button>
+            </div>
+        </div>
     </div>
 
     <script src="main.js"></script>
 </body>
 </html>
-
-
-    

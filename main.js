@@ -1,35 +1,83 @@
-// Defina a senha do seu cronograma aqui:
-const senhaCorreta = "1234";
+const displaySenha = document.getElementById('display-senha');
+const rangeTamanho = document.getElementById('range-tamanho');
+const valorTamanho = document.getElementById('valor-tamanho');
 
-const telaLogin = document.getElementById('tela-login');
-const telaCronograma = document.getElementById('tela-cronograma');
+const chkMaiusculas = document.getElementById('chk-maiusculas');
+const chkNumeros = document.getElementById('chk-numeros');
+const chkSimbolos = document.getElementById('chk-simbolos');
 
-const campoSenha = document.getElementById('campo-senha');
-const btnEntrar = document.getElementById('btn-entrar');
-const btnSair = document.getElementById('btn-sair');
-const mensagemErro = document.getElementById('mensagem-erro');
+const btnGerar = document.getElementById('btn-gerar');
+const btnHackear = document.getElementById('btn-hackear');
 
-btnEntrar.onclick = validarSenha;
+const overlayStatus = document.getElementById('overlay-status');
+const textoStatus = document.getElementById('texto-status');
+const mensagemStatus = document.getElementById('mensagem-status');
+const btnReiniciar = document.getElementById('btn-reiniciar');
 
-// Permite entrar apertando a tecla Enter
-campoSenha.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        validarSenha();
+let senhaAtual = "";
+let nivelAtual = 1;
+
+// Atualiza o valor do tamanho na tela
+rangeTamanho.oninput = () => {
+    valorTamanho.textContent = rangeTamanho.value;
+};
+
+// Gerador de Senha
+btnGerar.onclick = () => {
+    const minusculas = 'abcdefghijklmnopqrstuvwxyz';
+    const maiusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numeros = '0123456789';
+    const simbolos = '!@#$%^&*';
+
+    let alfabeto = minusculas;
+    if (chkMaiusculas.checked) alfabeto += maiusculas;
+    if (chkNumeros.checked) alfabeto += numeros;
+    if (chkSimbolos.checked) alfabeto += simbolos;
+
+    senhaAtual = "";
+    const tamanho = parseInt(rangeTamanho.value);
+
+    for (let i = 0; i < tamanho; i++) {
+        const indice = Math.floor(Math.random() * alfabeto.length);
+        senhaAtual += alfabeto[indice];
     }
-});
 
-function validarSenha() {
-    if (campoSenha.value === senhaCorreta) {
-        telaLogin.classList.add('escondido');
-        telaCronograma.classList.remove('escondido');
-        mensagemErro.textContent = '';
-        campoSenha.value = '';
+    displaySenha.textContent = senhaAtual;
+};
+
+// Testa a senha e avança de fase
+btnHackear.onclick = () => {
+    if (!senhaAtual || senhaAtual === "PRESS START") {
+        alert("PRIMEIRO GERE UMA SENHA!");
+        return;
+    }
+
+    // A cada fase, o tamanho mínimo da senha aumenta
+    const tamanhoMinimo = 5 + nivelAtual;
+    const perdeu = senhaAtual.length < tamanhoMinimo;
+
+    if (perdeu) {
+        // GAME OVER
+        textoStatus.textContent = "GAME OVER";
+        textoStatus.className = "game-over-texto";
+        mensagemStatus.textContent = `SENHA FRACA! Para a Fase ${nivelAtual}, você precisa de pelo menos ${tamanhoMinimo} caracteres.`;
+        btnReiniciar.textContent = "TRY AGAIN 🔁";
+        overlayStatus.classList.remove('escondido');
+        nivelAtual = 1; // Reseta o nível ao perder
     } else {
-        mensagemErro.textContent = 'Senha incorreta! Tente novamente.';
+        // PASSA DE FASE (STAGE CLEAR)
+        nivelAtual++;
+        textoStatus.textContent = "STAGE CLEAR!";
+        textoStatus.className = "vitoria-texto";
+        mensagemStatus.textContent = `ACESSO PERMITIDO! Avançando para a FASE ${nivelAtual}.`;
+        btnReiniciar.textContent = `IR PARA FASE ${nivelAtual} 🚀`;
+        overlayStatus.classList.remove('escondido');
     }
-}
+};
 
-btnSair.onclick = () => {
-    telaCronograma.classList.add('escondido');
-    telaLogin.classList.remove('escondido');
+// Botão para continuar ou reiniciar
+btnReiniciar.onclick = () => {
+    overlayStatus.classList.add('escondido');
+    displaySenha.textContent = "PRESS START";
+    senhaAtual = "";
 };
