@@ -7,12 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="crt-overlay"></div>
     <div class="container-jogo">
         <div class="painel-arcade">
             <h1 class="titulo-pixel">CYBER HACKER</h1>
             <p class="subtitulo">Gere a senha perfeita para passar de fase!</p>
 
-            <!-- Tela Estilo Arcade -->
+            <div class="painel-status-jogo">
+                <div class="stat-box">FASE: <span id="val-fase">1</span></div>
+                <div class="stat-box">SCORE: <span id="val-score">0000</span></div>
+                <div class="stat-box">VIDAS: <span id="val-vidas">❤️❤️❤️</span></div>
+            </div>
+
+            <!-- Tela Estilo Arcade CRT -->
             <div class="tela-display">
                 <div id="display-senha" class="texto-senha">PRESS START</div>
             </div>

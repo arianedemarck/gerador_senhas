@@ -8,26 +8,42 @@
 }
 
 body {
-    background-color: #0d0221;
+    background-color: #05010d;
     color: #00ff66;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    overflow: hidden;
+}
+
+/* Efeito de linhas CRT na tela */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 100;
+    pointer-events: none;
 }
 
 .container-jogo {
     width: 100%;
     max-width: 550px;
+    position: relative;
+    z-index: 1;
 }
 
 .painel-arcade {
-    background-color: #190a38;
+    background-color: #12062b;
     border: 4px solid #ff0055;
     border-radius: 12px;
     padding: 25px;
-    box-shadow: 0 0 20px #ff0055, inset 0 0 15px #190a38;
+    box-shadow: 0 0 30px #ff0055, inset 0 0 20px #000;
     position: relative;
     text-align: center;
 }
@@ -36,14 +52,27 @@ body {
     color: #ff0055;
     font-size: 20px;
     text-shadow: 3px 3px #00ffff;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
+    animation: pulsar-glow 1.5s infinite alternate;
 }
 
 .subtitulo {
     color: #00ffff;
     font-size: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     line-height: 1.4;
+}
+
+.painel-status-jogo {
+    display: flex;
+    justify-content: space-between;
+    background: #080214;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #00ffff;
+    margin-bottom: 15px;
+    font-size: 8px;
+    color: #ffcc00;
 }
 
 .tela-display {
@@ -52,7 +81,7 @@ body {
     border-radius: 6px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: inset 0 0 10px #00ffff;
+    box-shadow: inset 0 0 15px #00ffff;
     min-height: 70px;
     display: flex;
     align-items: center;
@@ -63,7 +92,7 @@ body {
 .texto-senha {
     color: #00ff66;
     font-size: 14px;
-    text-shadow: 0 0 5px #00ff66;
+    text-shadow: 0 0 8px #00ff66;
     line-height: 1.5;
 }
 
@@ -149,7 +178,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(13, 2, 33, 0.95);
+    background-color: rgba(5, 1, 13, 0.95);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -157,6 +186,7 @@ body {
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    z-index: 10;
 }
 
 .escondido {
@@ -171,7 +201,7 @@ body {
 .game-over-texto {
     color: #ff0055;
     text-shadow: 3px 3px #000;
-    animation: piscar 0.5s infinite alternate;
+    animation: piscar 0.4s infinite alternate;
 }
 
 .vitoria-texto {
@@ -183,10 +213,15 @@ body {
     font-size: 8px;
     color: #fff;
     line-height: 1.6;
-    max-width: 80%;
+    max-width: 85%;
 }
 
 @keyframes piscar {
     from { opacity: 1; }
-    to { opacity: 0.3; }
+    to { opacity: 0.2; }
+}
+
+@keyframes pulsar-glow {
+    from { text-shadow: 2px 2px #00ffff, 0 0 10px #ff0055; }
+    to { text-shadow: 2px 2px #00ffff, 0 0 20px #ff0055; }
 }

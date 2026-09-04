@@ -14,15 +14,27 @@ const textoStatus = document.getElementById('texto-status');
 const mensagemStatus = document.getElementById('mensagem-status');
 const btnReiniciar = document.getElementById('btn-reiniciar');
 
+const valFase = document.getElementById('val-fase');
+const valScore = document.getElementById('val-score');
+const valVidas = document.getElementById('val-vidas');
+
 let senhaAtual = "";
 let nivelAtual = 1;
+let pontuacao = 0;
+let vidas = 3;
 
-// Atualiza o valor do tamanho na tela
+function atualizarInterface() {
+    valFase.textContent = nivelAtual;
+    valScore.textContent = String(pontuacao).padStart(4, '0');
+    valVidas.textContent = '❤️'.repeat(vidas);
+}
+
+// Atualiza o tamanho na tela
 rangeTamanho.oninput = () => {
     valorTamanho.textContent = rangeTamanho.value;
 };
 
-// Gerador de Senha
+// Gerador de Senhas
 btnGerar.onclick = () => {
     const minusculas = 'abcdefghijklmnopqrstuvwxyz';
     const maiusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -45,39 +57,76 @@ btnGerar.onclick = () => {
     displaySenha.textContent = senhaAtual;
 };
 
-// Testa a senha e avança de fase
+// Validação da senha para passar de fase
 btnHackear.onclick = () => {
     if (!senhaAtual || senhaAtual === "PRESS START") {
         alert("PRIMEIRO GERE UMA SENHA!");
         return;
     }
 
-    // A cada fase, o tamanho mínimo da senha aumenta
-    const tamanhoMinimo = 5 + nivelAtual;
-    const perdeu = senhaAtual.length < tamanhoMinimo;
+    // Regras obrigatórias:
+    // 1. Tamanho pelo menos 6
+    // 2. Conter números
+    // 3. Conter símbolos
+    const temTamanhoSuficiente = senhaAtual.length >= 6;
+    const temNumeros = /[0-9]/.test(senhaAtual);
+    const temSimbolos = /[!@#$%^&*]/.test(senhaAtual);
 
-    if (perdeu) {
-        // GAME OVER
-        textoStatus.textContent = "GAME OVER";
-        textoStatus.className = "game-over-texto";
-        mensagemStatus.textContent = `SENHA FRACA! Para a Fase ${nivelAtual}, você precisa de pelo menos ${tamanhoMinimo} caracteres.`;
-        btnReiniciar.textContent = "TRY AGAIN 🔁";
-        overlayStatus.classList.remove('escondido');
-        nivelAtual = 1; // Reseta o nível ao perder
+    let motivoErro = "";
+
+    if (!temTamanhoSuficiente) {
+        motivoErro = "A senha precisa ter pelo menos 6 caracteres!";
+    } else if (!temNumeros) {
+        motivoErro = "A senha precisa conter NÚMEROS (123)!";
+    } else if (!temSimbolos) {
+        motivoErro = "A senha precisa conter SÍMBOLOS (#$%)!";
+    }
+
+    if (motivoErro !== "") {
+        // SENHA INVÁLIDA -> PERDE VIDA / GAME OVER
+        vidas--;
+        atualizarInterface();
+
+        if (vidas <= 0) {
+            // GAME OVER
+            textoStatus.textContent = "GAME OVER";
+            textoStatus.className = "game-over-texto";
+            mensagemStatus.textContent = `SISTEMA BLOQUEADO! ${motivoErro}`;
+            btnReiniciar.textContent = "RECOMEÇAR JOGO 🔁";
+            overlayStatus.classList.remove('escondido');
+            
+            // Reseta progresso total
+            nivelAtual = 1;
+            pontuacao = 0;
+            vidas = 3;
+        } else {
+            // ERRO
+            textoStatus.textContent = "FALHA DE SEGURANÇA";
+            textoStatus.className = "game-over-texto";
+            mensagemStatus.textContent = `${motivoErro} Você perdeu 1 vida!`;
+            btnReiniciar.textContent = "TENTAR NOVAMENTE 🔁";
+            overlayStatus.classList.remove('escondido');
+        }
     } else {
-        // PASSA DE FASE (STAGE CLEAR)
+        // PASSA DE FASE
+        pontuacao += 100 * nivelAtual;
         nivelAtual++;
+        atualizarInterface();
+
         textoStatus.textContent = "STAGE CLEAR!";
         textoStatus.className = "vitoria-texto";
-        mensagemStatus.textContent = `ACESSO PERMITIDO! Avançando para a FASE ${nivelAtual}.`;
+        mensagemStatus.textContent = `SENHA APROVADA! +${100 * (nivelAtual - 1)} PTS. Avançando para a FASE ${nivelAtual}.`;
         btnReiniciar.textContent = `IR PARA FASE ${nivelAtual} 🚀`;
         overlayStatus.classList.remove('escondido');
     }
 };
 
-// Botão para continuar ou reiniciar
+// Botão para fechar o overlay e continuar
 btnReiniciar.onclick = () => {
     overlayStatus.classList.add('escondido');
     displaySenha.textContent = "PRESS START";
     senhaAtual = "";
+    atualizarInterface();
 };
+
+atualizarInterface();
